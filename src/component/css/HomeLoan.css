@@ -1,0 +1,63 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+.Emi_calculater_reacted{
+    width: 100%;
+    font-family: Poppins;
+}
+.Emi_firsted_calculated{
+    width: 1200px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+.Emi_releted_amount{
+    width: 500px;
+}
+.Emi_first_field, .Emi_second_field_calculated{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 35px;
+    border: 1px solid gray;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: white;
+}
+
+.Emi_second_field_calculated{
+    width: 450px;
+    margin: auto;
+}
+
+.Emi_loan_amount_fild{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.emi_par_anuman{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 35px;
+}
+.second_emi_calculater{
+    border-radius: 20px;
+    width: 550px;
+    background: linear-gradient(135deg, #4a90e2, #9013fe);
+}
+
+.second_first_calculate{
+    display: flex;
+    align-items: center;
+    margin-bottom: 45px;
+}
+.graph_side{
+    color: white;
+    font-size: large;
+}
+.payment{
+    font-size: 25px;
+    font-weight: bold;
+}

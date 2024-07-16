@@ -1,0 +1,23 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+.flex{
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    margin: auto;
+}
+.justifycontent{
+    justify-content: space-between;
+    background-color: #61dafb;
+    padding: 20px 30px;
+}
+.product-item{
+    padding: 20px;
+}
+.car_list{
+    width: 90%;
+    margin: auto;
+}
