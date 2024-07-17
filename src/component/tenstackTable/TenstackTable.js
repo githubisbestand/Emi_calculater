@@ -18,9 +18,7 @@ import {
 
 function MyTableComponent() {
     const [values, setValues] = useState([]);
-
-    console.log("values === ", values);
-
+    
     const columnHelper = createColumnHelper();
 
     const columns = [
