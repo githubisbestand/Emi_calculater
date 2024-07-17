@@ -1,13 +1,14 @@
 import React from "react";
-import HomeLoan from "./component/HomeLoan/HomeLoan";
-import "./component/css/HomeLoan.css";
+// import HomeLoan from "./component/HomeLoan/HomeLoan";
+// import "./component/css/HomeLoan.css";
+import MyTableComponent from "./component/tenstackTable/TenstackTable";
 
 
 
 function App(){
     return(
         <>
-            <HomeLoan/>
+            <MyTableComponent/>
         </>
     )
 }

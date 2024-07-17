@@ -61,3 +61,18 @@
     font-size: 25px;
     font-weight: bold;
 }
+.fa-stop{
+    color: #5996a7;
+    font-size: large;
+    margin-right: 5px;
+}
+.emi_money_paresist{
+    color: rgba(114, 112, 112, 0.904);
+}
+.monthley_emi_pay{
+    color: rgb(170, 168, 166);
+    font-size: 18px;
+}
+.noto{
+    color: gainsboro;
+}
