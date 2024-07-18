@@ -61,3 +61,21 @@
     font-size: 25px;
     font-weight: bold;
 }
+
+.fa-stop{
+    color: green;
+    margin-right: 5px;
+}
+
+.fa-square{
+    color: rgb(207, 203, 203);
+    margin-right: 5px;
+}
+
+.emi_lakh_anuam{
+    color: gray;
+}
+.monthley_pay{
+    color: #a5b5c7;
+    font-size: large;
+}

@@ -28,9 +28,6 @@ function HomeLoan() {
             show: false,
         },
     });
-    const [series, setSeries] = useState([41, 17]);
-
-
 
     const [cost, setCost] = useState(0);
     const [interestRate, setInterestRate] = useState(10);
@@ -38,14 +35,23 @@ function HomeLoan() {
     const [downPayment, setDownPayment] = useState(0);
     const [emi, setEmi] = useState(0);
     const [principalAmount, setPrincipalAmount] = useState(0);
+    console.log("principalAmount === ", principalAmount);
     const [interestAmount, setInterestAmount] = useState(0);
+    console.log("IntrestAmount", interestAmount);
+    const [series, setSeries] = useState([]);
+
+    console.log("serise ===", series);
+
+    useEffect(()=>{
+        setSeries([+principalAmount, +interestAmount])
+    },[principalAmount, interestAmount])
 
     const calculateEMI = () => {
         if (!cost || !tenure || !interestRate) return 0;
 
         const loanAmount = cost - downPayment;
-        const rateOfInterest = interestRate / 100 / 12; // Monthly interest rate
-        const numberOfMonths = tenure * 12; // Total number of payments
+        const rateOfInterest = interestRate / 100 / 12; 
+        const numberOfMonths = tenure * 12; 
 
         const emi =
             (loanAmount * rateOfInterest * (Math.pow(1 + rateOfInterest, numberOfMonths))) /
@@ -85,14 +91,14 @@ function HomeLoan() {
                 <div className="Emi_releted_amount">
                     <div className="Emi_first_field">
                         <div className="monthly_emi_pay">
-                            <p>Monthly EMI Pay</p>
+                            <p className='monthley_pay'>Monthly EMI Pay</p>
                             <p className='payment'>{numberWithCommas(emi)}</p>
                         </div>
                         <div>
                             <hr style={{ color: "black", height: "50px" }} />
                         </div>
                         <div className="monthly_emi_pay">
-                            <p>Total Amount</p>
+                            <p className='monthley_pay'>Total Amount</p>
                             <p className='payment'>{numberWithCommas(principalAmount)}</p>
                         </div>
                     </div>
@@ -103,21 +109,21 @@ function HomeLoan() {
                                 type="text"
                                 value={cost}
                                 onChange={handleCostChange}
-                                style={{ width: "90px", outline: "none" }}
+                                style={{ width: "90px", outline: "none", textAlign : "center" }}
                             />
                         </div>
                         <div className='emi_slider'>
                             <Slider
-                                value={downPayment}
-                                onChange={(e, value) => handleDownPaymentChange(value)}
-                                min={0}
-                                max={cost}
+                                value={cost}
+                                onChange={(e, value) => setCost(value)}
+                                min={500000}
+                                max={100000000}
                                 valueLabelDisplay="auto"
                             />
                         </div>
                         <div className='emi_par_anuman'>
-                            <p>₹ 5 lakh</p>
-                            <p>₹ 10 cr</p>
+                            <p className='emi_lakh_anuam'>₹ 5 lakh</p>
+                            <p className='emi_lakh_anuam'>₹ 10 cr</p>
                         </div>
                     </div>
                     <div className="Emi_second_field">
@@ -127,7 +133,7 @@ function HomeLoan() {
                                 type="text"
                                 value={tenure}
                                 onChange={handleTenureChange}
-                                style={{ width: "90px", outline: "none" }}
+                                style={{ width: "90px", outline: "none", textAlign:"center" }}
                             />
                         </div>
                         <div className='emi_slider'>
@@ -140,18 +146,18 @@ function HomeLoan() {
                             />
                         </div>
                         <div className='emi_par_anuman'>
-                            <p>1 year</p>
-                            <p>30 years</p>
+                            <p className='emi_lakh_anuam'>1 year</p>
+                            <p className='emi_lakh_anuam'>30 years</p>
                         </div>
                     </div>
                     <div className="Emi_second_field">
                         <div className="Emi_loan_amount_fild">
-                            <p>Interest Rate (% P.A.)</p>
+                            <p>Interest Rate (% p.a.)</p>
                             <input
                                 type="text"
                                 value={interestRate}
                                 onChange={handleInterestRateChange}
-                                style={{ width: "90px", outline: "none" }}
+                                style={{ width: "90px", outline: "none", textAlign : "center" }}
                             />
                         </div>
                         <div className='emi_slider'>
@@ -164,8 +170,8 @@ function HomeLoan() {
                             />
                         </div>
                         <div className='emi_par_anuman'>
-                            <p>5%</p>
-                            <p>25%</p>
+                            <p className='emi_lakh_anuam'>5%</p>
+                            <p className='emi_lakh_anuam'>25%</p>
                         </div>
                     </div>
                 </div>
@@ -184,13 +190,22 @@ function HomeLoan() {
                     </div>
                     <div className="Emi_second_field_calculated">
                         <div className="monthly_emi_pay">
-                            <p>Principal Amount</p>
+                            <p><i class="fa-solid fa-stop"></i>Principal</p>
+                            <p>Amount</p>
                             <p className='payment'>{numberWithCommas(cost)}</p>
                         </div>
                         <div>
                             <hr style={{ color: "black", height: "90px" }} />
                         </div>
                         <div className="monthly_emi_pay">
-                            <p>Interest Amount</p>
+                            <p><i class="fa-solid fa-square"></i>Interest</p>
+                            <p>Amount</p>
                             <p className='payment'>{numberWithCommas(interestAmount)}</p>
-                 
+                        </div>
+                     </div>       
+                </div>
+                </div>
+                </div>
+)}
+
+export default HomeLoan;
