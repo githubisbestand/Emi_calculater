@@ -3,8 +3,34 @@ import Slider from '@mui/material/Slider';
 import Chart from "react-apexcharts";
 import { numberWithCommas } from '../utils/config';
 
-function HomeLoan() {
 
+
+
+function formatNumber(value) {
+    const number = parseInt(value, 10);
+    if (isNaN(number)) return '';
+
+    let str = number.toString();
+    let lastThree = str.substring(str.length - 3);
+    let otherNumbers = str.substring(0, str.length - 3);
+    
+    if (otherNumbers !== '') {
+        lastThree = ',' + lastThree;
+        otherNumbers = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+        return otherNumbers + lastThree;
+    } else {
+        return lastThree;
+    }
+}
+
+function parseNumber(value) {
+    return value.replace(/,/g, '');
+}
+
+
+
+
+function HomeLoan() {
 
     const [options, setOptions] = useState({
         chart: {
@@ -20,6 +46,7 @@ function HomeLoan() {
                     size: '70%',
                 },
             },
+            colors: ['red', 'orange'],
         },
         dataLabels: {
             enabled: true,
@@ -27,6 +54,7 @@ function HomeLoan() {
         stroke: {
             show: false,
         },
+        colors: "#2b908f",
     });
 
     const [cost, setCost] = useState(0);
@@ -35,12 +63,11 @@ function HomeLoan() {
     const [downPayment, setDownPayment] = useState(0);
     const [emi, setEmi] = useState(0);
     const [principalAmount, setPrincipalAmount] = useState(0);
-    console.log("principalAmount === ", principalAmount);
     const [interestAmount, setInterestAmount] = useState(0);
-    console.log("IntrestAmount", interestAmount);
     const [series, setSeries] = useState([]);
+    
+    console.log("serise === ", series);
 
-    console.log("serise ===", series);
 
     useEffect(()=>{
         setSeries([+principalAmount, +interestAmount])
@@ -65,18 +92,38 @@ function HomeLoan() {
         setInterestAmount(interest.toFixed(0));
     };
 
-    const handleCostChange = (e) => {
-        setCost(e.target.value);
-    };
+
+const handleCostChange = (e) => {
+    const rawValue = e.target.value;
+    const numericValue = parseNumber(rawValue);
+
+    if (!isNaN(numericValue) && numericValue !== '') {
+        const newValue = Math.min(Math.max(numericValue, 0), 100000000);
+        setCost(newValue);
+    } else {
+        setCost(); 
+    }
+};
+
 
     const handleInterestRateChange = (e) => {
-        setInterestRate(e.target.value);
+        const value = e.target.value;
+        if (/^\d*\.?\d{0,2}$/.test(value) && value >= 5 && value <= 25) {
+            setInterestRate(value);
+        }
     };
+
 
     const handleTenureChange = (e) => {
-        setTenure(e.target.value);
+        const value = parseInt(e.target.value);
+        if (!isNaN(value)) {
+            const newValue = Math.min(Math.max(value, 1), 30);
+            setTenure(newValue);
+        } else {
+            setTenure("");
+        }
     };
-
+    
     const handleDownPaymentChange = (value) => {
         setDownPayment(value);
     };
@@ -84,6 +131,11 @@ function HomeLoan() {
     useEffect(() => {
         calculateEMI();
     }, [cost, interestRate, tenure, downPayment]);
+
+
+    const valueLabelFormat = (value) => formatNumber(value);
+
+
 
     return (
         <div className="Emi_calculater_reacted">
@@ -107,7 +159,7 @@ function HomeLoan() {
                             <p>Loan Amount</p>
                             <input
                                 type="text"
-                                value={cost}
+                                value={formatNumber(cost)}
                                 onChange={handleCostChange}
                                 style={{ width: "90px", outline: "none", textAlign : "center" }}
                             />
@@ -118,7 +170,13 @@ function HomeLoan() {
                                 onChange={(e, value) => setCost(value)}
                                 min={500000}
                                 max={100000000}
+                                step={100000}
+                                valueLabelFormat={valueLabelFormat}
                                 valueLabelDisplay="auto"
+                                sx = {{
+                                    width :"500",
+                                    height : 8
+                                }}
                             />
                         </div>
                         <div className='emi_par_anuman'>
@@ -143,6 +201,10 @@ function HomeLoan() {
                                 min={1}
                                 max={30}
                                 valueLabelDisplay="auto"
+                                sx = {{
+                                    width :"500",
+                                    height : 8
+                                }}
                             />
                         </div>
                         <div className='emi_par_anuman'>
@@ -164,9 +226,14 @@ function HomeLoan() {
                             <Slider
                                 value={interestRate}
                                 onChange={(e, value) => setInterestRate(value)}
-                                min={1}
+                                min={5}
                                 max={25}
+                                step={0.5}
                                 valueLabelDisplay="auto"
+                                sx = {{
+                                    width :"500",
+                                    height : 8
+                                }}
                             />
                         </div>
                         <div className='emi_par_anuman'>
@@ -179,9 +246,7 @@ function HomeLoan() {
                     <div className='second_first_calculate'>
                         <div className="donut">
                             <div className="donut">
-                                {/* <Chart options={options} series={series} type="donut" width="380" /> */}
                                 <Chart options={options} series={series} type="donut" width="380" />
-
                             </div>
                         </div>
                         <div className='graph_side'>
@@ -190,16 +255,14 @@ function HomeLoan() {
                     </div>
                     <div className="Emi_second_field_calculated">
                         <div className="monthly_emi_pay">
-                            <p><i class="fa-solid fa-stop"></i>Principal</p>
-                            <p>Amount</p>
+                            <p><i class="fa-solid fa-stop"></i>Principal Amount</p>
                             <p className='payment'>{numberWithCommas(cost)}</p>
                         </div>
                         <div>
                             <hr style={{ color: "black", height: "90px" }} />
                         </div>
                         <div className="monthly_emi_pay">
-                            <p><i class="fa-solid fa-square"></i>Interest</p>
-                            <p>Amount</p>
+                            <p><i class="fa-solid fa-square"></i>Interest Amount</p>
                             <p className='payment'>{numberWithCommas(interestAmount)}</p>
                         </div>
                      </div>       

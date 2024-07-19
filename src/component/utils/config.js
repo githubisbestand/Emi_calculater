@@ -1,7 +1,3 @@
-// export function numberWithCommas(x) {
-//     if (x) return `₹ ${x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
-// }
-
 export function numberWithCommas(x) {
     if (x === undefined || x === null) return '';
     x = x.toString();
