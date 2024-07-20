@@ -3,9 +3,6 @@ import Slider from '@mui/material/Slider';
 import Chart from "react-apexcharts";
 import { numberWithCommas } from '../utils/config';
 
-
-
-
 function formatNumber(value) {
     const number = parseInt(value, 10);
     if (isNaN(number)) return '';
@@ -27,16 +24,13 @@ function parseNumber(value) {
     return value.replace(/,/g, '');
 }
 
-
-
-
 function HomeLoan() {
 
     const [options, setOptions] = useState({
         chart: {
             type: 'donut',
         },
-        labels: ['princpipal Amount', 'Interest Amount'],
+        labels: ['Total Amount', 'Interest Amount'],
         legend: {
             show: false,
         },
@@ -49,12 +43,19 @@ function HomeLoan() {
             colors: ['red', 'orange'],
         },
         dataLabels: {
-            enabled: true,
+            enabled: false,
         },
         stroke: {
             show: false,
         },
         colors: "#2b908f",
+        tooltip: {
+            y: {
+                formatter: function (value) {
+                    return numberWithCommas(value);
+                }
+            }
+        }
     });
 
     const [cost, setCost] = useState(0);
@@ -66,7 +67,7 @@ function HomeLoan() {
     const [interestAmount, setInterestAmount] = useState(0);
     const [series, setSeries] = useState([]);
     
-    console.log("serise === ", series);
+        console.log("serise === ", series);
 
 
     useEffect(()=>{
